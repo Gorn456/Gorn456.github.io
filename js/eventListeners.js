@@ -49,7 +49,7 @@ travelButton.addEventListener("click", () => {
     menuSwitch()
     sideMenuShowed = false
     newGame.Player.stamina--
-   // updateSideMenu()
+    updateMenu()
     nextMonth()
     newGame.citesArray.forEach(city => {
       if (city.cityDisplayed) {
@@ -64,16 +64,16 @@ workButton.addEventListener("click", () => {
     newGame.Player.money += newGame.Player.currentCity.workPayment
     workSound.play()
     newGame.Player.stamina--
-   // updateSideMenu()
+    updateMenu()
     nextMonth()
     updateCharacterCard(newGame.Player)
 })
 
 sleepButton.addEventListener("click", () => {
     if (newGame.Player.stamina < 3) newGame.Player.stamina++
+    updateMenu()
     nextMonth()
     updateCharacterCard(newGame.Player)
-    // updateSideMenu()
 })
 
 audioPlayer.addEventListener("ended", () => {
@@ -114,27 +114,29 @@ canvas.addEventListener("click", (event) => {
         const city = newGame.citesArray[i]
         if (city.cursorInRadius(event.pageX, event.pageY)) {
             if (city === newGame.Player.currentCity ) {
-                if (workButton.disabled && newGame.Player.stamina) {
+                if (workButton.disabled && newGame.Player.hasStamina()) {
                     workButton.disabled = false
                     workButtonSwitch()
                 }
-                // if (sleepButton.disabled) {
-                //     sleepButton.disabled = false
-                //     sleepButtonSwitch()
-                // }
+
+                if (sleepButton.disabled) {
+                    sleepButton.disabled = false
+                    sleepButtonSwitch()
+                }
             }
             else {
                 if (!workButton.disabled) {
                 workButton.disabled = true
                 workButtonSwitch()
                 }
-                // if (!sleepButton.disabled) {
-                //     sleepButton.disabled = true
-                //     sleepButtonSwitch()
-                // }
+
+                if (!sleepButton.disabled) {
+                    sleepButton.disabled = true
+                    sleepButtonSwitch()
+                }
             }
             if (city.travelPossible(newGame.Player.currentCity)) {
-                if (travelButton.disabled && newGame.Player.stamina) {
+                if (travelButton.disabled && newGame.Player.hasStamina()) {
                     travelButton.disabled = false
                     travelButtonSwitch()
                     // travelButton.classList.remove("disable") 
@@ -187,31 +189,35 @@ export const changeMenuFlag = () => {
     sideMenuShowed = !sideMenuShowed
 }
 
-const updateSideMenu = () => {
-    let sideMenuCity = undefined
-    newGame.citesArray.forEach(city => {
-      if (city.cityDisplayed) sideMenuCity = city  
-    })
+const updateMenu = () => {
+    if (!newGame.Player.hasStamina()) {
+        if (!travelButton.disabled) {
+            travelButton.disabled = true
+            travelButtonSwitch()
+        }
 
-    if (workButton.disabled && newGame.Player.stamina) {
-        workButton.disabled = false
-        workButtonSwitch()
-    }
-    else if (!workButton.disabled && !newGame.Player.stamina) {
-        workButton.disabled = true
-        workButtonSwitch()
+        if (!workButton.disabled) {
+            workButton.disabled = true
+            workButtonSwitch()
+        }
     }
 
+    else {
+        let menuCity = undefined
+        newGame.citesArray.forEach(city => {
+            if (city.cityDisplayed) menuCity = city
+        })
 
-    if (travelButton.disabled && newGame.Player.stamina
-        && sideMenuCity.travelPossible(newGame.Player.currentCity)) {
-        travelButton.disabled = false
-        travelButtonSwitch()
-        // travelButton.classList.remove("disable") 
-    }
-    else if (!travelButton.disabled && !newGame.Player.stamina) {
-        travelButton.disabled = true
-        workButtonSwitch()
+        if (travelButton.disabled && newGame.Player.stamina === 1
+            && menuCity.travelPossible(newGame.Player.currentCity)) {
+            travelButton.disabled = false
+            travelButtonSwitch()
+        }
+
+        if (workButton.disabled && newGame.Player.stamina === 1 && menuCity === newGame.Player.currentCity) {
+            workButton.disabled = false
+            workButtonSwitch()
+        }
     }
 
 }

@@ -92,4 +92,8 @@ export class Player {
 
     }
 
+    hasStamina() {
+        return this.stamina
+    }
+
 }
