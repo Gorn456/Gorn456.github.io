@@ -106,7 +106,7 @@ export const updateCharacterCard = (Player) => {
     upperBarMoney.innerHTML = Player.money
     money.innerHTML = Player.money
     age.innerHTML = Player.age
-    staminaInfo.innerHTML = Player.stamina
+    staminaInfo.innerHTML = `Ilość staminy: ${Player.stamina} na 3`
 }
 
 export const workButtonSwitch = () => {

@@ -259,11 +259,11 @@ li {
 }
 
 #sideMenu div {
-  font-size: 2.5vh;
-  color: white;
+  font-size: 4.5vh;
+  color: black;
   margin: 3%;
   width: 20vw;
-  border: 0.5vh solid black;
+  /* border: 0.5vh solid black; */
 }
 
 #sideMenu ul {
