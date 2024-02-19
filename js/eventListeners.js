@@ -49,7 +49,7 @@ travelButton.addEventListener("click", () => {
     menuSwitch()
     sideMenuShowed = false
     newGame.Player.stamina--
-    updateSideMenu()
+   // updateSideMenu()
     nextMonth()
     newGame.citesArray.forEach(city => {
       if (city.cityDisplayed) {
@@ -64,7 +64,7 @@ workButton.addEventListener("click", () => {
     newGame.Player.money += newGame.Player.currentCity.workPayment
     workSound.play()
     newGame.Player.stamina--
-    updateSideMenu()
+   // updateSideMenu()
     nextMonth()
     updateCharacterCard(newGame.Player)
 })
@@ -73,7 +73,7 @@ sleepButton.addEventListener("click", () => {
     if (newGame.Player.stamina < 3) newGame.Player.stamina++
     nextMonth()
     updateCharacterCard(newGame.Player)
-    updateSideMenu()
+    // updateSideMenu()
 })
 
 audioPlayer.addEventListener("ended", () => {
@@ -118,20 +118,20 @@ canvas.addEventListener("click", (event) => {
                     workButton.disabled = false
                     workButtonSwitch()
                 }
-                if (sleepButton.disabled) {
-                    sleepButton.disabled = false
-                    sleepButtonSwitch()
-                }
+                // if (sleepButton.disabled) {
+                //     sleepButton.disabled = false
+                //     sleepButtonSwitch()
+                // }
             }
             else {
                 if (!workButton.disabled) {
                 workButton.disabled = true
                 workButtonSwitch()
                 }
-                if (!sleepButton.disabled) {
-                    sleepButton.disabled = true
-                    sleepButtonSwitch()
-                }
+                // if (!sleepButton.disabled) {
+                //     sleepButton.disabled = true
+                //     sleepButtonSwitch()
+                // }
             }
             if (city.travelPossible(newGame.Player.currentCity)) {
                 if (travelButton.disabled && newGame.Player.stamina) {
